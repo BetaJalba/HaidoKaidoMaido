@@ -1,0 +1,104 @@
+using System;
+namespace Matricis 
+{
+    public class CProgram 
+    {
+        const int A = 0;
+        const int B = 1;
+        const int C = 2;
+        static int[,] bellaMatrice;
+
+        static void Main() 
+        {
+            // 1 -> 3 = ( 1 * 2 ) + 1 -> 7 = ((( 1 * 2 ) * 2 ) * 2) - 1 -> 15 -> 31 -> 63
+            // 1    2    3    4     5     6
+
+            bellaMatrice = new int[3, 5];
+            
+            bellaMatrice[0, 0] = 1;
+            bellaMatrice[0, 1] = 2;
+            bellaMatrice[0, 2] = 3;
+            bellaMatrice[0, 3] = 4;
+            bellaMatrice[0, 4] = 5;
+
+            risolvi(5, 2^5 - 1, 1);
+
+            /*
+             [1] [ ] [ ]
+             [2] [ ] [ ]
+             [3] [ ] [ ]
+             */
+        }
+
+        static void risolvi(int n, int mMax, int p)
+        {
+            //mosse possibili = 2^n - 1
+            //mosse = 31;
+            //5 -> 31;
+
+            switch (p)
+            {
+                case 1:
+                    if (cercaIfPossibile(A, B))
+                        Console.WriteLine("A - B");
+                    else
+                        Console.WriteLine("B - A");
+                    break;
+                case 2:
+                    if (cercaIfPossibile(A, C))
+                        Console.WriteLine("A - C");
+                    else
+                        Console.WriteLine("C - A");
+                    break;
+                case 3:
+                    if (cercaIfPossibile(B, C))
+                        Console.WriteLine("B - C");
+                    else
+                        Console.WriteLine("C - B");
+                    break;
+                /*case 4:
+                    if (cercaIfPossibile(A, B))
+                        Console.WriteLine("A - B");
+                    else
+                        Console.WriteLine("B - A");
+                    break;
+                case 5:
+                    if (possibile)
+                        Console.WriteLine("C - A");
+                    else
+                        Console.WriteLine("A - C");
+                    break;
+                case 6:
+                    if (possibile)
+                        Console.WriteLine("C - B");
+                    else
+                        Console.WriteLine("B - C");
+                    break;*/
+                default:
+                    p = 1;
+                    break;
+            }
+
+            if (mMax == 0)
+                return;
+
+            risolvi(n, mMax - 1, p + 1);
+        }
+
+        
+        static bool cercaIfPossibile(int xPartenza, int xFinale) 
+        {
+            int yPartenza, yFinale;
+
+            for (int i = 0; i < bellaMatrice.GetLength(-1); i++)
+                if (bellaMatrice[xPartenza, i] != 0)
+                    yPartenza = i;
+
+            for (int i = 0; i < bellaMatrice.GetLength(0); i++)
+                if (bellaMatrice[xFinale, i] != 0)
+                    yFinale = i;
+
+            return true;
+        }
+    }
+}
